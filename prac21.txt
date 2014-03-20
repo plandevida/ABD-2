@@ -1,0 +1,53 @@
+a) Describe las DF’s y DM’s que tiene la BDejemplo
+
+CLIENTES
+Es dependencia fucional por que todos los atributos que no son clave primaria dependen de esta.
+DNI --> Nombre , Dirección y Telefono. ADECUADA
+
+COMPRAS
+Es dependencia funcional por que todos los artributos que no son PK dependen de la tupla triple que forma la PK.
+DNI, NUMT , NUMF --> Fecha , Tienda , Importe. ADECUADA
+
+EMPRESA 
+Es dependencia fucional por que todos los atributos que no son clave primaria dependen de esta.
+Nombre --> Cotización y Capital. ADECUADA
+
+INVIERTE
+Es dependencia fucional por que todos los atributos que no son clave primaria dependen de esta.
+DNI , NombreE , Tipo -> Cantidad. ADECUADA
+
+MOROSO
+Es dependencia fucional por que todos los atributos que no son clave primaria dependen de esta.
+DNI --> Nombre , Dirección y Telefono. ADECUADA
+
+PUESTO
+-- Asumimos que el sueldo depende del DNI.
+DNI -> Titulo, Sueldo	
+
+TARJETA
+No todos loa atributos dependen de la clave primaria completa, es inadecuada por que da problemas en las actualizaciones.
+NumT -> TipoT  INADECUADA, NECESRIO QUITAR
+TipoT -> Organización
+
+Si se cambia la organizacion del tipoT hay que realizar multiples modificaciones.
+
+TIENET 
+Tarjeta --> Caducidad y Saldo.	INADECUADA, NECESARIO QUITAR
+-- No toda la tupla depende de la PK , caducidad y saldo dependen solo de numt y no de la PK, por lo tanto son atrubutos que deberían estar en la tarjeta.
+
+b) Indica cuáles son adecuadas y cuáles son problemáticas y conviene quitar
+realizado sonbre el apartado a.
+
+c) En qué Forma Normal está cada tabla? Y la BD completa?
+
+CLIENTES 3FN
+COMPRAS 3FN
+EMPRESA 3FN
+INVIERTE 3FN 
+MOROSO  3FN
+PUESTO 3FN
+TARJETA 1FN
+TIENET	1FN
+
+
+BD -> 1FN
