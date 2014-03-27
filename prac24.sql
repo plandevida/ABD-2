@@ -26,6 +26,8 @@
 --b)- Qué atributos y qué clave debe tener las nuevas relaciones? Escribir el esquema relacional de las
 --relaciones de a)
 
+-- CLIENTE 1 - N --> TIENETEL 
+
 -- PK:
 --		PAGOTEL --> NUMT, TELEFONO
 --		TELEFONO --> TELEFONO
@@ -33,6 +35,7 @@
 
 --c) Sigue siendo válido (es decir: es un diseño adecuado de la BD?) para este apartado el cambio hecho
 --con el saldo y la caducidad en el apartado 3? porqué ?
+
 --Si , no modificamos la tabla TARJETA 
 
 
@@ -41,17 +44,35 @@
 --defecto a los atributos nuevos.
 
 CREATE TABLE TELEFONO (
-	TELEFONO VARCHAR(9) NOT NULL,
-	COMPANY VARCHAR(255),
-	TEIPOTARIFA VARCHAR(255),
-	FECHAALTA DATE
+	TELEFONO CHAR(12) NOT NULL,
+	COMPANY VARCHAR(100),
+	TIPOTARIFA VARCHAR(255),
+	FECHALTA DATE,
+	PRIMARY KEY (TELEFONO)
 );
 
+insert into telefono (TELEFONO, COMPANY, FECHALTA)
+select distinct(TELEFONO), COMPANY, FECHALTA from tienetel;
+
+update telefono set TIPOTARIFA = 'PREPAGO';
 
 -- Crear tabla PagoTel e insertar tuplas para que cada usuario pueda pagar cualquiera de sus teléfonos
 --con cualquiera de sus tarjetas. Para ello se extraen los datos de las tablas TieneT y TieneTel mediante
 --instrucciones SQL dentro de la inserción.
 -- Arreglar los atributos de TieneTel, quitando los que sobren (No use “drop table”)
+
+CREATE TABLE PAGOTEL (
+	NUMT INT CHECK (NumT <> 0),
+	TELEFONO CHAR(12),
+	SALDOACUMULADO INT default 0 not null,
+	PRIMARY KEY (NUMT, TELEFONO),
+	FOREIGN KEY (NUMT) REFERENCES tarjeta(NUMT),
+	FOREIGN KEY (TELEFONO) REFERENCES telefono(TELEFONO)
+);
+
+insert into pagotel (numt, telefono) select tienet.numt, tienetel.telefono from cliente, tienet, tienetel where cliente.dni = tienet.dni and cliente.dni = tienetel.dni;
+
+alter table tienetel drop (company, fechalta);
 
 --f) - Crear varias tuplas válidas de acuerdo a los datos existentes. Compruebe que la tarjeta es del cliente
 --adecuado dentro de la instrucción de creación.
